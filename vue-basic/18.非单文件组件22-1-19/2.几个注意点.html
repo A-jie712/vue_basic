@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        几个注意点：
+            1.关于组件名
+                一个单词组成
+                    第一种写法：首字母小写：school
+                    第二种写法：首字母大写：School
+                多个单词组成
+                    第一种写法：(kebab-case命名)my-school
+                    第二种写法：(CamelCase命名)MySchool  需要脚手架支持否则报错
+                备注：
+                    (1).组件名尽可能回避html中已有的元素标签名字：例如h2，H2等
+                    (2).可以使用name配置项指定组件在开发者工具中呈现的名字
+            2.关于组件标签
+                第一种写法：<school></school>
+                第二种写法：<school/>
+                备注：不使用脚手架时，<school/>会导致的后续标签组件不能渲染
+            3.一个简写方式
+                const school = Vue.extend(options)  可简写为 const school = options
+     -->
+    <div id="root">
+        <h2>{{msg}}</h2>
+        <school></school>
+        <!--<school/> 不使用脚手架时，<school/>会导致的后续标签组件不能渲染 -->
+        
+    </div>
+</body>
+    <script>
+        Vue.config.productionTip = false
+        //const School = Vue.extend({
+        //const my-school = Vue.extend({
+        //const MySchool = Vue.extend({
+        //const school ={options}直接使用配置对象写
+        const school = Vue.extend({
+            //可以使用name配置项指定组件在开发者工具中呈现的名字
+            name:'atguigu',
+            template:`
+            <div>
+                <h3>学校名：{{name}}</h3>
+                <h3>地址：{{address}}</h3>
+            </div>
+            `,
+            data(){
+                return{
+                    name:'尚硅谷',
+                    address:'北京昌平'
+                }
+            }
+        })
+        new Vue({
+           el:'#root',
+           data:{
+             msg:'你好啊！'
+           },
+           components:{
+               //School
+               //'my-school'
+               //MySchool  没有脚手架解析不了，会报错
+               //h2  不许用html中的元素标签
+               school
+           }
+        })
+    </script>
+</html>

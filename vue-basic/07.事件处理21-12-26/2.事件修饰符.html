@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.事件修饰符</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .div1{
+            width: 110px;
+            height: 80px;
+            padding: 5px;
+            background-color: aqua;
+        }
+        .div2{
+            width: 50px;
+            height: 40px;
+            background-color: rgb(235, 117, 49);
+        }
+        ul{
+            width: 200px;
+            height: 200px;
+            background-color: brown;
+            overflow: auto;
+        }
+        li{
+            height: 100px;
+            
+        }
+    </style>
+</head>
+<body>
+    <!--
+        Vue中的事件修饰符:
+                1.prevent:阻止默认事件（常用）;
+                2.stop:阻止事件冒泡（常用);
+                3.once:事件只触发一次（常用）;
+                4.capture:使用事件的捕获模式;
+                5.self:只有event.target是当前操作的元素是才触发事件;
+                6.passive:事件的默认行为立即执行，无需等待事件回调执行完毕;
+
+    -->
+    <div id="root">
+        <h1>欢迎来到{{name}}学习</h1>
+        <!--prevent:阻止默认事件（常用）;-->
+        <a href="https://www.baidu.com/?tn=21002492_28_hao_pg" @click.prevent="showInfo">点我提示信息</a>
+
+
+
+        <!--stop:阻止事件冒泡（常用);-->
+        <div @click="showInfo">
+            <button @click.stop="showInfo">点我提示信息</button>
+        <!--stop:阻止事件冒泡（常用)并prevent:阻止默认事件（常用）;-->
+            <!-- <button @click.stop.prevent="showInfo">点我提示信息</button> -->
+        </div>
+
+
+        <!--once:事件只触发一次（常用）-->
+        <div>
+            <button @click.once="showInfo">点我提示信息</button>
+        </div>
+
+
+
+        <!--capture:使用事件的捕获模式-->
+        <div class="div1" @click.capture="showInfo">
+            <div class="div2" @click="showInfo2"></div>
+        </div>
+
+
+        <!--self:只有event.target是当前操作的元素是才触发事件;-->
+        <div class="demo1" @click.self="showInfo">//event是他的事件时，他的事件才触发
+            <button @click="showInfo">点我提示信息</button>
+        </div>
+
+        
+        <!--passive:事件的默认行为立即执行，无需等待事件回调执行完毕;-->
+        <ul @wheel.passive="demo">
+            <li>1</li>    
+            <li>2</li>    
+            <li>3</li>    
+            <li>4</li>    
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    
+    const vm = new Vue({
+       el:'#root',
+       data:{name:'尚硅谷'},
+        methods:{
+            showInfo(e){
+                // e.preventDefault();
+                  alert(e.target.innerText)              
+             },
+             showInfo2(e){
+                // e.preventDefault();
+                  alert("同学你好!!!!!!!!!!!!!!!!")              
+             },
+             demo(e){
+                // e.preventDefault();
+                for(var i=0;i<10000;i++){
+                    console.log("@")
+                }      
+                console.log("累死我了")
+             }
+        }
+       
+    })
+</script>
+</html>
